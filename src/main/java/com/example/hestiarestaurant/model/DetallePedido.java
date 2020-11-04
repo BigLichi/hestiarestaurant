@@ -3,21 +3,20 @@ package com.example.hestiarestaurant.model;
 import javax.persistence.*;
 
 @Entity
-public class DetallePlato {
+public class DetallePedido {
 
     @EmbeddedId
-    DetallePlatoKey id;
+    DetallePedidoKey id;
+
+    @ManyToOne
+    @MapsId("idPedido")
+    @JoinColumn(name = "id_pedido")
+    Pedido pedido;
 
     @ManyToOne
     @MapsId("idPlato")
     @JoinColumn(name = "id_plato")
     Plato plato;
 
-    @ManyToOne
-    @MapsId("idIngrediente")
-    @JoinColumn(name = "id_ingrediente")
-    Ingrediente ingrediente;
-
-    Integer cantidad;
-
+    int cantidadPlato;
 }
