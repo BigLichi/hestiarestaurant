@@ -1,12 +1,15 @@
 package com.example.hestiarestaurant.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Pedido {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer nroPedido;
+    @OneToMany(mappedBy = "pedido")
+    Set<DetallePedido> detallePedido;
 
     private int mesa;
     private int recibo;
