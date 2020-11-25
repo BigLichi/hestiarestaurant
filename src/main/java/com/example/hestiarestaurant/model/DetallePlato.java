@@ -18,6 +18,6 @@ public class DetallePlato {
     @JoinColumn(name = "id_ingrediente")
     Ingrediente ingrediente;
 
-    Integer canitdad;
+    Integer cantidad;
 
 }
