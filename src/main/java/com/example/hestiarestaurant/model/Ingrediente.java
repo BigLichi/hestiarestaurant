@@ -1,15 +1,20 @@
 package com.example.hestiarestaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Ingrediente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idIngrediente;
- //   @OneToMany(mappedBy = "ingrediente")
-  //  Set<DetallePlato> DetallePlatoSet;
+
+    @JsonBackReference(value = "DetalleIngrediente")
+    @OneToMany(mappedBy = "ingrediente")
+    Set<DetallePlato> DetallePlatoSet;
 
     private int cantidad;
     private String nombre;

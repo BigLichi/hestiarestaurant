@@ -1,6 +1,9 @@
 package com.example.hestiarestaurant.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,7 +13,10 @@ public class Plato {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idPlato;
 
+
+    @JsonManagedReference(value = "DetallePlato")
     @OneToMany(mappedBy = "plato")
+    @JsonIgnore
     Set<DetallePlato> DetallePlatoSet;
 
     private String nombre;
