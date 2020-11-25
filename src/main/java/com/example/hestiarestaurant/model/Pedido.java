@@ -1,33 +1,33 @@
 package com.example.hestiarestaurant.model;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 import java.util.Date;
 
 @Entity
 public class Pedido {
-
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer nroPedido;
-
-    private Integer mesa;
-    private Integer recibo;
-    private Date fecha;
+  
     private boolean estado;
+    private Date fecha;
+    private int mesa;
+    private int recibo;
+  
+    @OneToMany(mappedBy = "pedido")
+    Set<DetallePedido> detallePedido;
 
     public Pedido() {
     }
 
-    public Pedido(Integer nroPedido, Integer mesa, Integer recibo, Date fecha, boolean estado) {
+    public Pedido(Integer nroPedido, int mesa, int recibo, Date fecha, boolean estado) {
         this.nroPedido = nroPedido;
         this.mesa = mesa;
         this.recibo = recibo;
         this.fecha = fecha;
         this.estado = estado;
+
     }
 
     public Integer getNroPedido() {
@@ -38,22 +38,22 @@ public class Pedido {
         this.nroPedido = nroPedido;
     }
 
-    public Integer getMesa() {
+    public int getMesa() {
         return mesa;
     }
 
-    public void setMesa(Integer mesa) {
+    public void setMesa(int mesa) {
         this.mesa = mesa;
     }
 
-    public Integer getRecibo() {
+    public int getRecibo() {
         return recibo;
     }
 
-    public void setRecibo(Integer recibo) {
+    public void setRecibo(int recibo) {
         this.recibo = recibo;
     }
-
+  
     public Date getFecha() {
         return fecha;
     }
@@ -69,4 +69,5 @@ public class Pedido {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
 }

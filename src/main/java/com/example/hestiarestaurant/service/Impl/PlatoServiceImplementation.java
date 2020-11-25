@@ -1,14 +1,15 @@
-package com.example.hestiarestaurant.service;
+package com.example.hestiarestaurant.service.Impl;
 
 import com.example.hestiarestaurant.model.Plato;
 import com.example.hestiarestaurant.repository.PlatoRepository;
+import com.example.hestiarestaurant.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PlatoServiceImplementation implements PlatoService{
+public class PlatoServiceImplementation implements PlatoService {
 
     @Autowired
     private PlatoRepository platoRespository;

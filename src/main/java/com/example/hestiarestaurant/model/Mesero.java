@@ -1,6 +1,5 @@
 package com.example.hestiarestaurant.model;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +18,12 @@ public class Mesero {
     public Mesero() {
     }
 
-    public Mesero(Integer idMesero, Integer rutMesero, String nombre, String apellido) {
+    public Mesero(Integer idMesero, String nombre, String apellido, int rutMesero) {
         this.idMesero = idMesero;
-        this.rutMesero = rutMesero;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.rutMesero = rutMesero;
+
     }
 
     public Integer getIdMesero() {
@@ -57,4 +57,5 @@ public class Mesero {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+
 }

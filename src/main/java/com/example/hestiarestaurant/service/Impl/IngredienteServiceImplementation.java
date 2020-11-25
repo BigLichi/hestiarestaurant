@@ -1,7 +1,8 @@
-package com.example.hestiarestaurant.service;
+package com.example.hestiarestaurant.service.Impl;
 
 import com.example.hestiarestaurant.model.Ingrediente;
 import com.example.hestiarestaurant.repository.IngredienteRepository;
+import com.example.hestiarestaurant.service.IngredienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
