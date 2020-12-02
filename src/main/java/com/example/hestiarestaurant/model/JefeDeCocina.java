@@ -1,45 +1,45 @@
 package com.example.hestiarestaurant.model;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Mesero {
+public class JefeDeCocina {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idMesero;
+    private Integer idCocinero;
 
-    private Integer rutMesero;
+    private Integer rutCocinero;
     private String nombre;
     private String apellido;
 
-    public Mesero() {
+    public JefeDeCocina() {
     }
 
-    public Mesero(Integer idMesero, String nombre, String apellido, int rutMesero) {
-        this.idMesero = idMesero;
+    public JefeDeCocina(Integer idCocinero, Integer rutCocinero, String nombre, String apellido) {
+        this.idCocinero = idCocinero;
+        this.rutCocinero = rutCocinero;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.rutMesero = rutMesero;
-
     }
 
-    public Integer getIdMesero() {
-        return idMesero;
+    public Integer getIdCocinero() {
+        return idCocinero;
     }
 
-    public void setIdMesero(Integer idMesero) {
-        this.idMesero = idMesero;
+    public void setIdCocinero(Integer idCocinero) {
+        this.idCocinero = idCocinero;
     }
 
-    public Integer getRutMesero() {
-        return rutMesero;
+    public Integer getRutCocinero() {
+        return rutCocinero;
     }
 
-    public void setRutMesero(Integer rutMesero) {
-        this.rutMesero = rutMesero;
+    public void setRutCocinero(Integer rutCocinero) {
+        this.rutCocinero = rutCocinero;
     }
 
     public String getNombre() {
@@ -57,5 +57,6 @@ public class Mesero {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+
 
 }

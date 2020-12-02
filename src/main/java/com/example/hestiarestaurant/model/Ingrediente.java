@@ -1,42 +1,35 @@
 package com.example.hestiarestaurant.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Ingrediente {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idIngrediente;
+
+    @JsonBackReference(value = "DetalleIngrediente")
     @OneToMany(mappedBy = "ingrediente")
-    Set<DetallePlato> detalleplato;
+    Set<DetallePlato> DetallePlatoSet;
 
     private int cantidad;
     private String nombre;
     private String unidadDeMedida;
 
-    private LocalDateTime fechaVencimiento;
-
     public Ingrediente() {
     }
 
-    public Ingrediente(int ID_Ingrediente, int cantidad, String nombre, String unidadDeMedida, LocalDateTime fecha_Vencimiento) {
+    public Ingrediente(int ID_Ingrediente, int cantidad, String nombre, String unidadDeMedida) {
         this.idIngrediente = ID_Ingrediente;
         this.cantidad = cantidad;
         this.nombre = nombre;
         this.unidadDeMedida = unidadDeMedida;
-        fechaVencimiento = fecha_Vencimiento;
     }
 
-    public int getIdIngrediente() {
-        return idIngrediente;
-    }
-
-    public void setIdIngrediente(int ID_Ingrediente) {
-        this.idIngrediente = ID_Ingrediente;
-    }
 
     public int getCantidad() {
         return cantidad;
@@ -62,11 +55,4 @@ public class Ingrediente {
         this.unidadDeMedida = unidadDeMedida;
     }
 
-    public LocalDateTime getFecha_Vencimiento() {
-        return fechaVencimiento;
-    }
-
-    public void setFecha_Vencimiento(LocalDateTime fecha_Vencimiento) {
-        fechaVencimiento = fecha_Vencimiento;
-    }
 }
