@@ -12,6 +12,6 @@ public interface JefeCocinaService {
 
         JefeCocina findById(int Id);
 
-        void delete(int Id);
+        boolean delete(int Id);
 
 }

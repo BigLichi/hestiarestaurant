@@ -1,8 +1,11 @@
 package com.example.hestiarestaurant.controller;
 
-import com.example.hestiarestaurant.model.Plato;
-import com.example.hestiarestaurant.service.PlatoService;
+import com.example.hestiarestaurant.model.Ingrediente;
+import com.example.hestiarestaurant.model.Pedido;
+import com.example.hestiarestaurant.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,25 +15,43 @@ import java.util.List;
 public class PedidoController {
 
     @Autowired
-    PlatoService platoService;
+    PedidoService pedidoService;
 
     @GetMapping("/")
-    public List<Plato> getAllPlatos(){
-        return platoService.listAll();
+    public ResponseEntity<List<Pedido>> getAllPedido(){
+        List<Pedido> pedidoList = pedidoService.listAll();
+        if(pedidoList.isEmpty()){
+            return new ResponseEntity<List<Pedido>>(HttpStatus.NO_CONTENT);
+        }else
+        {
+            return new ResponseEntity<List<Pedido>>(pedidoList, HttpStatus.OK);
+        }
     }
 
     @PostMapping("/")
-    public Plato crearPlato(@RequestBody Plato plato){
-        return platoService.save(plato);
+    public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido pedido){
+        Pedido pedidoNUevo = pedidoService.save(pedido);
+        return new ResponseEntity<Pedido>(pedidoNUevo,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Plato getPlatoById(@PathVariable(value = "id") int platoBuscar){
-        return platoService.findById(platoBuscar);
+    public ResponseEntity<Pedido> getPedidoById(@PathVariable(value = "id") int pedidoBuscar){
+        Pedido pedido = pedidoService.findById(pedidoBuscar);
+        if(pedido != null){
+            return  new ResponseEntity<Pedido>(pedido,HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Pedido>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void borrarPlato(@PathVariable(value = "id") int platoBuscar){
-        platoService.delete(platoBuscar);
+    public ResponseEntity<Integer> borrarPedido(@PathVariable(value = "id") int pedidoBuscar){
+        boolean isRemoved = pedidoService.delete(pedidoBuscar);
+        if(!isRemoved) {
+            return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Integer>(pedidoBuscar, HttpStatus.OK);
     }
+
+
 }

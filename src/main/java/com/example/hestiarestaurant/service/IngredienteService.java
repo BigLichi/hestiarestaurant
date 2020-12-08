@@ -10,5 +10,5 @@ public interface IngredienteService {
 
     Ingrediente findById(int Id);
 
-    void delete(int Id);
+    boolean delete(int Id);
 }
