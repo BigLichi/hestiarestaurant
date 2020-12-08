@@ -20,8 +20,7 @@ public class JefeCocinaServiceImplementation implements JefeCocinaService{
     }
 
     @Override
-    public JefeCocina save(JefeCocina jefeCocina){
-        return jefeCocinaRepository.save(jefeCocina);
+    public JefeCocina save(JefeCocina jefeCocina) { return jefeCocinaRepository.save(jefeCocina);
     }
 
     @Override
