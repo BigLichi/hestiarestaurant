@@ -1,5 +1,6 @@
 package com.example.hestiarestaurant.service;
 
+import com.example.hestiarestaurant.exception.HestiaException;
 import com.example.hestiarestaurant.model.Ingrediente;
 import com.example.hestiarestaurant.repository.IngredienteRepository;
 import com.example.hestiarestaurant.service.Impl.IngredienteServiceImplementation;
@@ -61,7 +62,7 @@ class IngredienteServiceTest {
 
     }
     @Test
-    void saveNoGuardado() {
+    void saveNoGuardado() throws HestiaException {
         //Arrange
         Ingrediente ing= new Ingrediente(1,5,"aguacate", "kg");
         when(ingredienteRepository.save(ing)).thenReturn(ing);

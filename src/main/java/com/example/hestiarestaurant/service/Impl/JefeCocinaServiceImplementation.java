@@ -25,7 +25,7 @@ public class JefeCocinaServiceImplementation implements JefeCocinaService{
     public JefeCocina save(JefeCocina jefeCocina) throws HestiaException {
         if(jefeCocina != null){
             Optional<JefeCocina> jefeCocinaHallado = jefeCocinaRepository.findById(jefeCocina.getIdCocinero());
-            if(jefeCocinaHallado.isEmpty()){
+            if(jefeCocinaHallado == null){
                 return jefeCocinaRepository.save(jefeCocina);
             }
         }

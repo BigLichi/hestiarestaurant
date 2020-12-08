@@ -1,5 +1,6 @@
 package com.example.hestiarestaurant.service;
 
+import com.example.hestiarestaurant.exception.HestiaException;
 import com.example.hestiarestaurant.model.JefeCocina;
 import com.example.hestiarestaurant.repository.JefeCocinaRepository;
 import com.example.hestiarestaurant.service.Impl.JefeCocinaServiceImplementation;
@@ -64,7 +65,7 @@ class JefeCocinaServiceTest {
         }
 
     @Test
-    void guardarElJefeCocinaCuandoNoExiste() {
+    void guardarElJefeCocinaCuandoNoExiste() throws HestiaException {
         //Test save()
         //Arrange
         JefeCocina jefeCocina= new JefeCocina(1, "Lichi", "Gatica", 201913212);
@@ -78,20 +79,20 @@ class JefeCocinaServiceTest {
         assertSame(jefeCocina, response);
 
     }
-    /*@Test
-    void guardarElJefeCocinaCuandoExiste() {
+    @Test
+    void guardarElJefeCocinaCuandoExiste() throws HestiaException{
         //Test save() cuando ya existe return Exception
         JefeCocina jefeCocina= new JefeCocina(1, "Lichi", "Gatica", 201913212);
-        when(jefeCocinaRepository.save(jefeCocina)).thenReturn(jefeCocina);
 
         //Act + Assert
-        assertThrows(CuentasBancariasException.class, ()-> jefeCocinaServiceImplementation.save(jefeCocina));
+        assertThrows(HestiaException.class, ()-> jefeCocinaServiceImplementation.save(jefeCocina));
     }
+
     @Test
-    void guardarElJefeCocinaCuandoRecibeComoParametroNullLanzaUnaExcepcion() {
+    void guardarElJefeCocinaCuandoRecibeComoParametroNullLanzaUnaExcepcion() throws HestiaException{
         //Test save() = null return Exception
-        assertThrows(CuentasBancariasException.class, ()-> jefeCocinaServiceImplementation.save(null));
-    }*/
+        assertThrows(HestiaException.class, ()-> jefeCocinaServiceImplementation.save(null));
+    }
 
     @Test
     void encuentraAlJefeCocinaSegunSuId() {
