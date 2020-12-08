@@ -30,6 +30,13 @@ public class Ingrediente {
         this.unidadDeMedida = unidadDeMedida;
     }
 
+    public Integer getId() {
+        return idIngrediente;
+    }
+
+    public void setId(Integer idIngrediente) {
+        this.idIngrediente = idIngrediente;
+    }
 
     public int getCantidad() {
         return cantidad;
