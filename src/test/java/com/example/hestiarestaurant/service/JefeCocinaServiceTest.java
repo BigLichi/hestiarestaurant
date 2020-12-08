@@ -80,16 +80,17 @@ class JefeCocinaServiceTest {
 
     }
     @Test
-    void guardarElJefeCocinaCuandoExiste() throws HestiaException{
+    void guardarElJefeCocinaCuandoExiste() {
         //Test save() cuando ya existe return Exception
         JefeCocina jefeCocina= new JefeCocina(1, "Lichi", "Gatica", 201913212);
+        when(jefeCocinaRepository.findById(jefeCocina.getIdCocinero())).thenReturn(java.util.Optional.of(jefeCocina)    );
 
         //Act + Assert
         assertThrows(HestiaException.class, ()-> jefeCocinaServiceImplementation.save(jefeCocina));
     }
 
     @Test
-    void guardarElJefeCocinaCuandoRecibeComoParametroNullLanzaUnaExcepcion() throws HestiaException{
+    void guardarElJefeCocinaCuandoRecibeComoParametroNullLanzaUnaExcepcion(){
         //Test save() = null return Exception
         assertThrows(HestiaException.class, ()-> jefeCocinaServiceImplementation.save(null));
     }
