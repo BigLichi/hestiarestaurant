@@ -1,5 +1,6 @@
 package com.example.hestiarestaurant.service.Impl;
 
+import com.example.hestiarestaurant.exception.HestiaException;
 import com.example.hestiarestaurant.model.Ingrediente;
 import com.example.hestiarestaurant.repository.IngredienteRepository;
 import com.example.hestiarestaurant.service.IngredienteService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IngredienteServiceImplementation implements IngredienteService {
@@ -20,8 +22,14 @@ public class IngredienteServiceImplementation implements IngredienteService {
     }
 
     @Override
-    public Ingrediente save(Ingrediente ingrediente){
-        return ingredienteRepository.save(ingrediente);
+    public Ingrediente save(Ingrediente ingrediente) throws HestiaException {
+        if(ingrediente != null){
+            Optional<Ingrediente> ingredientHallado = ingredienteRepository.findById(ingrediente.getId());
+            if(ingredientHallado.isEmpty()){
+                return ingredienteRepository.save(ingrediente);
+            }
+        }
+        throw new HestiaException();
     }
 
     @Override

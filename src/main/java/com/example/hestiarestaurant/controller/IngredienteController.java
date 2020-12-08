@@ -1,6 +1,7 @@
 package com.example.hestiarestaurant.controller;
 
 
+import com.example.hestiarestaurant.exception.HestiaException;
 import com.example.hestiarestaurant.model.Ingrediente;
 import com.example.hestiarestaurant.service.IngredienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,13 @@ public class IngredienteController {
 
     @PostMapping("/")
     public ResponseEntity<Ingrediente> crearIngrediente(@RequestBody Ingrediente ingrediente){
-        Ingrediente ingredienteNuevo = ingredienteService.save(ingrediente);
-        return new ResponseEntity<Ingrediente>(ingredienteNuevo,HttpStatus.OK);
+        try {
+            Ingrediente ingredienteNuevo = ingredienteService.save(ingrediente);
+            return new ResponseEntity<Ingrediente>(ingredienteNuevo, HttpStatus.CREATED);
+        }
+        catch (HestiaException e){
+            return new ResponseEntity<Ingrediente>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")

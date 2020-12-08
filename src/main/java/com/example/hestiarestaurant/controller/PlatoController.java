@@ -1,5 +1,6 @@
 package com.example.hestiarestaurant.controller;
 
+import com.example.hestiarestaurant.exception.HestiaException;
 import com.example.hestiarestaurant.model.Plato;
 import com.example.hestiarestaurant.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,13 @@ public class PlatoController {
 
     @PostMapping("/")
     public ResponseEntity<Plato> crearPlato(@RequestBody Plato plato){
-        Plato platoNuevo = platoService.save(plato);
-        return new ResponseEntity<Plato>(platoNuevo,HttpStatus.OK);
+        try {
+            Plato platoNuevo = platoService.save(plato);
+            return new ResponseEntity<Plato>(platoNuevo, HttpStatus.OK);
+        }
+        catch (HestiaException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
