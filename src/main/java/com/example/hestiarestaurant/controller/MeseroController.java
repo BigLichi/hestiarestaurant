@@ -1,6 +1,5 @@
 package com.example.hestiarestaurant.controller;
 
-import com.example.hestiarestaurant.model.Ingrediente;
 import com.example.hestiarestaurant.model.Mesero;
 import com.example.hestiarestaurant.service.MeseroService;
 import org.springframework.beans.factory.annotation.Autowired;
