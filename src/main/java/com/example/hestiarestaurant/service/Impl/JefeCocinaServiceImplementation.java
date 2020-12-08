@@ -30,8 +30,9 @@ public class JefeCocinaServiceImplementation implements JefeCocinaService{
     }
 
     @Override
-    public void delete(int id){
+    public boolean delete(int id){
         jefeCocinaRepository.deleteById(id);
+        return true;
     }
 
 

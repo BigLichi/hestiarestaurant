@@ -30,7 +30,8 @@ public class PlatoServiceImplementation implements PlatoService {
     }
 
     @Override
-    public void delete(int id){
+    public boolean delete(int id){
         platoRespository.deleteById(id);
+        return true;
     }
 }

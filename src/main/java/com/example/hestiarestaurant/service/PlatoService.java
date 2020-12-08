@@ -10,5 +10,5 @@ public interface PlatoService {
 
     Plato findById(int Id);
 
-    void delete(int Id);
+    boolean delete(int Id);
 }

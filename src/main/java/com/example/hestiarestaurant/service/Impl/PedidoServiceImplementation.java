@@ -32,8 +32,9 @@ public class PedidoServiceImplementation implements PedidoService {
         }
 
         @Override
-        public void delete(int id){
+        public boolean delete(int id){
             pedidoRepository.deleteById(id);
+            return true;
         }
 
 

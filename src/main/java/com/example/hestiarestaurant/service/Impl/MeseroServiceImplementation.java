@@ -30,7 +30,8 @@ public class MeseroServiceImplementation implements MeseroService {
     }
 
     @Override
-    public void delete(int id){
+    public boolean delete(int id){
         meseroRepository.deleteById(id);
+        return true;
     }
 }

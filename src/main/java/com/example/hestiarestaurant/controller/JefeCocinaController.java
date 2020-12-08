@@ -3,6 +3,8 @@ package com.example.hestiarestaurant.controller;
 import com.example.hestiarestaurant.model.JefeCocina;
 import com.example.hestiarestaurant.service.JefeCocinaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,22 +17,37 @@ public class JefeCocinaController {
     JefeCocinaService jefeCocinaService;
 
     @GetMapping("/")
-    public List<JefeCocina> getAllPlatos(){
-        return jefeCocinaService.listAll();
+    public ResponseEntity<List<JefeCocina>> getAllPlatos(){
+        List<JefeCocina> jefeCocinaList = jefeCocinaService.listAll();
+        if(jefeCocinaList.isEmpty()){
+            return new ResponseEntity<List<JefeCocina>>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<JefeCocina>>(jefeCocinaList,HttpStatus.OK);
+        }
     }
 
     @PostMapping("/")
-    public JefeCocina crearJefeCocina(@RequestBody JefeCocina jefeCocina){
-        return jefeCocinaService.save(jefeCocina);
+    public ResponseEntity<JefeCocina> crearJefeCocina(@RequestBody JefeCocina jefeCocina){
+        JefeCocina jefeCocinaNuevo = jefeCocinaService.save(jefeCocina);
+        return new ResponseEntity<JefeCocina>(jefeCocinaNuevo,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public JefeCocina getJefeCocinaById(@PathVariable(value = "id") int jefeCocinaBuscar){
-        return jefeCocinaService.findById(jefeCocinaBuscar);
+    public ResponseEntity<JefeCocina> getJefeCocinaById(@PathVariable(value = "id") int jefeCocinaBuscar){
+        JefeCocina jefeCocina = jefeCocinaService.findById(jefeCocinaBuscar);
+        if (jefeCocina != null) {
+            return new ResponseEntity<JefeCocina>(jefeCocina,HttpStatus.OK);
+        } else {
+            return new ResponseEntity<JefeCocina>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void borrarJefeCocina(@PathVariable(value = "id") int jefeCocinaBuscar){
-        jefeCocinaService.delete(jefeCocinaBuscar);
+    public ResponseEntity<Integer> borrarJefeCocina(@PathVariable(value = "id") int jefeCocinaBuscar){
+        boolean isRemoved = jefeCocinaService.delete(jefeCocinaBuscar);
+        if(!isRemoved) {
+            return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Integer>(jefeCocinaBuscar, HttpStatus.OK);
     }
 }

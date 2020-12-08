@@ -30,8 +30,9 @@ public class IngredienteServiceImplementation implements IngredienteService {
     }
 
     @Override
-    public void delete(int id){
+    public boolean delete(int id){
         ingredienteRepository.deleteById(id);
+        return true;
     }
 
 }
