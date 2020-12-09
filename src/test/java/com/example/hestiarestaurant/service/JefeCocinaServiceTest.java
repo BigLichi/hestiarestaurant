@@ -9,15 +9,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class JefeCocinaServiceTest {
 
     @Mock
@@ -127,14 +130,19 @@ class JefeCocinaServiceTest {
     }
 
 
-    /*@Test
+    @Test
     void borrarCuandoSeEncuentraElJefeCocina() {
         //Test delete()
         //Arrange
         JefeCocina jefeCocina = new JefeCocina(1, "Lichi", "Gatica", 201913212);
-        doThrow().when(jefeCocinaRepository).delete(jefeCocina);
+        doNothing().when(jefeCocinaRepository).deleteById(1);
+        Boolean response;
+
         //Act
+        response = jefeCocinaServiceImplementation.delete(1);
+
         //Assert
+        assertTrue(response);
     }
-    */
+
 }
