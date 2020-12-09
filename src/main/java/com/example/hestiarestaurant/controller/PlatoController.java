@@ -2,6 +2,7 @@ package com.example.hestiarestaurant.controller;
 
 import com.example.hestiarestaurant.exception.HestiaException;
 import com.example.hestiarestaurant.model.Plato;
+import com.example.hestiarestaurant.repository.PlatoRepository;
 import com.example.hestiarestaurant.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ public class PlatoController {
 
     @Autowired
     PlatoService platoService;
+
+    @Autowired
+    PlatoRepository platoRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Plato>> getAllPlatos(){
@@ -48,6 +52,19 @@ public class PlatoController {
         } else {
             return new ResponseEntity<Plato>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @PutMapping("/{id}")
+    public Plato updateStatus (@RequestBody Plato plato,@PathVariable(value = "id") int platoBuscar){
+            return platoRepository.findById(platoBuscar)
+                    .map(platoModificado ->{
+                        platoModificado.setDisponibilidad(plato.isDisponibilidad());
+                        return platoRepository.save(platoModificado);
+                    })
+                    .orElseGet(() -> {
+                        return plato;
+                    });
+
     }
 
     @DeleteMapping("/{id}")
