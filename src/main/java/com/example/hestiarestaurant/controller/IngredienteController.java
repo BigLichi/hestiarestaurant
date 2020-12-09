@@ -56,15 +56,15 @@ public class IngredienteController {
     }
 
     @PutMapping("/{id}")
-    public Ingrediente updateCantidad (@RequestBody Ingrediente ingrediente, @PathVariable(value = "id") int ingredienteBuscar){
-        return ingredienteRepository.findById(ingredienteBuscar)
+    public ResponseEntity<Ingrediente> updateCantidad (@RequestBody Ingrediente ingrediente, @PathVariable(value = "id") int ingredienteBuscar){
+        return new ResponseEntity<Ingrediente>(ingredienteRepository.findById(ingredienteBuscar)
                 .map(ingredienteCantidad ->{
                     ingredienteCantidad.setCantidad(ingredienteCantidad.getCantidad() + ingrediente.getCantidad());
                     return ingredienteRepository.save(ingredienteCantidad);
                 })
                 .orElseGet(() -> {
                     return ingrediente;
-                });
+                }),HttpStatus.OK);
 
     }
 

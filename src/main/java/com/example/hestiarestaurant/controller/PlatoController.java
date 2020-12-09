@@ -66,15 +66,15 @@ public class PlatoController {
     }
 
     @PutMapping("/{id}")
-    public Plato updateStatus (@RequestBody Plato plato,@PathVariable(value = "id") int platoBuscar){
-            return platoRepository.findById(platoBuscar)
+    public ResponseEntity<Plato> updateStatus (@RequestBody Plato plato,@PathVariable(value = "id") int platoBuscar){
+            return new ResponseEntity<Plato>(platoRepository.findById(platoBuscar)
                     .map(platoModificado ->{
                         platoModificado.setDisponibilidad(plato.isDisponibilidad());
                         return platoRepository.save(platoModificado);
                     })
                     .orElseGet(() -> {
                         return plato;
-                    });
+                    }),HttpStatus.OK);
 
     }
 
