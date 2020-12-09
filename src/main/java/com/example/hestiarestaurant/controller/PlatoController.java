@@ -1,6 +1,7 @@
 package com.example.hestiarestaurant.controller;
 
 import com.example.hestiarestaurant.exception.HestiaException;
+import com.example.hestiarestaurant.model.DetallePlato;
 import com.example.hestiarestaurant.model.Plato;
 import com.example.hestiarestaurant.repository.PlatoRepository;
 import com.example.hestiarestaurant.service.PlatoService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/platos")
@@ -22,16 +24,15 @@ public class PlatoController {
     PlatoRepository platoRepository;
 
     @GetMapping("/")
-    public ResponseEntity<List<Plato>> getAllPlatos(){
+    public ResponseEntity<List<Plato>> getAllPlatos() {
 
         List<Plato> platoList = platoService.listAll();
-        if(platoList.isEmpty()){
+        if (platoList.isEmpty()) {
             return new ResponseEntity<List<Plato>>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Plato>>(platoList, HttpStatus.OK);
         }
     }
-
 
     @PostMapping("/")
     public ResponseEntity<Plato> crearPlato(@RequestBody Plato plato){
@@ -51,6 +52,16 @@ public class PlatoController {
             return  new ResponseEntity<Plato>(plato,HttpStatus.OK);
         } else {
             return new ResponseEntity<Plato>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping("/{id}/detalle")
+    public ResponseEntity<Set<DetallePlato>> getPlatoDetalle(@PathVariable(value = "id") int platoBuscar){
+        Plato plato = platoService.findById(platoBuscar);
+        if(plato != null){
+            return  new ResponseEntity<Set<DetallePlato>>(plato.getDetallePlatoSet(),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Set<DetallePlato>>(HttpStatus.NO_CONTENT);
         }
     }
 
