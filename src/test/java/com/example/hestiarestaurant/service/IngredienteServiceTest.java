@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,7 +27,8 @@ class IngredienteServiceTest {
     IngredienteServiceImplementation ingredienteServiceImp;
 
     @Test
-    void listAll() {
+    void generaUnaListaConTodosLosIngredientesExistentes() {
+        //Test listAll()
         //Arrange
         Ingrediente ing1= new Ingrediente(1,5,"palta","kg");
         Ingrediente ing2= new Ingrediente(2,5,"tomate","kg");
@@ -44,7 +46,8 @@ class IngredienteServiceTest {
     }
 
     @Test
-    void ListAllPeroRetornaNada(){
+    void trataDeListarLosIngredientesPeroLaListaEstaVaciaYNoRetornaNada(){
+        //
         //Arrange
         ArrayList<Ingrediente> listaVacia=new ArrayList<Ingrediente>();
         when(ingredienteRepository.findAll()).thenReturn(listaVacia);
@@ -58,11 +61,15 @@ class IngredienteServiceTest {
     }
 
     @Test
-    void saveNull(){
-
+    void trataDeGuardarUnIngredientePeroElIngresadoPorParametroEsNull(){
+        //Test save() == null
+        //Act + Assert
+        assertThrows(HestiaException.class,()->ingredienteServiceImp.save(null));
     }
+
     @Test
-    void saveNoGuardado() throws HestiaException {
+    void guardaElIngredienteIngresadoPorParametroYAgregaElIngrediente() throws HestiaException {
+        //Test save() guarda el ingrediente
         //Arrange
         Ingrediente ing= new Ingrediente(1,5,"aguacate", "kg");
         when(ingredienteRepository.save(ing)).thenReturn(ing);
@@ -76,11 +83,19 @@ class IngredienteServiceTest {
     }
 
     @Test
-    void saveYaGuardado(){
+    void guardarUnIngredienteYaExistente(){
+        //Test save() cuando ya existia anteriormente
+        //Arrange
+        Ingrediente ingrediente = new Ingrediente(1,3,"Pancit", "Unidad");
+        when(ingredienteRepository.findById(1)).thenReturn(java.util.Optional.of(ingrediente));
 
+        //Act + Assert
+        assertThrows(HestiaException.class,()-> ingredienteServiceImp.save(ingrediente));
     }
+
     @Test
-    void findById() {
+    void encuentraElIngredienteSegunSuIdYLoDevuelve() {
+        //Test findById()
         //Arrange
         Ingrediente ing=new Ingrediente(1,5,"avocado","kg");
         when(ingredienteRepository.getOne(1)).thenReturn(ing);
@@ -94,7 +109,32 @@ class IngredienteServiceTest {
     }
 
     @Test
-    void delete() {
+    void encuentraAlJefeCocinaSegunSuIdYNoExiste() {
+        //Test Encuentra el Ingrediente segun su ID, pero findById() == Null
+        //Arrange
+        Ingrediente ingrediente = new Ingrediente(1, 3, "Pancito", "Unidad");
+        when(ingredienteRepository.getOne(1)).thenReturn(null);
+        Ingrediente resultado;
 
+        //Act
+        resultado = ingredienteServiceImp.findById(1);
+
+        //Assert
+        assertNull(resultado);
+    }
+
+    @Test
+    void borrarCuandoSeEncuentreUnIngrediente() {
+        //Test delete()
+        //Arrange
+        Ingrediente ingrediente = new Ingrediente(1, 3, "Pancito", "Unidad");
+        doNothing().when(ingredienteRepository).deleteById(1);
+        Boolean response;
+
+        //Act
+        response = ingredienteServiceImp.delete(1);
+
+        //Assert
+        assertTrue(response);
     }
 }

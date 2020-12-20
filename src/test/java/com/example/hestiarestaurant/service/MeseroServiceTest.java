@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,7 +27,8 @@ class MeseroServiceTest {
     MeseroServiceImplementation meseroServiceImp;
 
     @Test
-    void listAll() {
+    void generaUnaListaDeTodosLosMeserosExistentes() {
+        //Test listAll()
         //Arrange
         Mesero mes1=new Mesero(1,"Mario", "Moya", 123456789);
         Mesero mes2=new Mesero(2,"Marcelo","Mardonez",987654321);
@@ -45,7 +47,8 @@ class MeseroServiceTest {
     }
 
     @Test
-    void listAllNull(){
+    void trataDeGenerarUnaListaDeLosMeseroPeroLaListaEstaVacia(){
+        //Test listAll() == null
         //Arrange
         ArrayList<Mesero> listaVacia= new ArrayList<>();
         when(meseroRepository.findAll()).thenReturn(listaVacia);
@@ -59,13 +62,15 @@ class MeseroServiceTest {
     }
 
     @Test
-    void savePeroNull(){
+    void intentaGuardarUnMeseroNull(){
+        //Test save() == null
         //Act + Assert
         assertThrows(HestiaException.class,()->meseroServiceImp.save(null));
     }
 
     @Test
-    void saveNoGuardado() throws HestiaException {
+    void intentaGuardarUnMeseroYEsteNoExisteEnLaListaYLoGuarda() throws HestiaException {
+        //Test save()
         //Arrange
         Mesero mes= new Mesero(1,"Mario","Moya", 123456789);
         when(meseroRepository.save(mes)).thenReturn(mes);
@@ -79,7 +84,8 @@ class MeseroServiceTest {
     }
 
     @Test
-    void savePeroYaGuardado(){
+    void guardarUnMeseroPeroYaEstaGuardado(){
+        //Test save() cuando el mesero ya se habia guardado anteriormente
         //Arrange
         Mesero mes= new Mesero(1,"Mario","Moya", 123456789);
         when(meseroRepository.findById(1)).thenReturn(java.util.Optional.of(mes));
@@ -89,7 +95,8 @@ class MeseroServiceTest {
     }
 
     @Test
-    void findById() {
+    void buscarMeseroSegunSuIDYLoEncuentra() {
+        //Test findById()
         //Arrange
         Mesero mes= new Mesero(1,"Mario","Moya", 123456789);
         when(meseroRepository.getOne(1)).thenReturn(mes);
@@ -103,6 +110,32 @@ class MeseroServiceTest {
     }
 
     @Test
-    void delete() {
+    void buscaUnMeseroSegunSuIdPeroNoExisteEnLaListaDeMeseros(){
+        //Test Encuentra el Mesero segun su ID findById() == Null
+        //Arrange
+        Mesero mesero = new Mesero(1, "Lichi", "Gatica", 201913212);
+        when(meseroRepository.getOne(1)).thenReturn(null);
+        Mesero resultado;
+
+        //Act
+        resultado = meseroServiceImp.findById(1);
+
+        //Assert
+        assertNull(resultado);
+    }
+
+    @Test
+    void borrarCuandoSeEncuentraElMesero() {
+        //Test delete() entrega true
+        //Arrange
+        Mesero mesero = new Mesero(1, "Lichi", "Gatica", 201913212);
+        doNothing().when(meseroRepository).deleteById(1);
+        Boolean response;
+
+        //Act
+        response = meseroServiceImp.delete(1);
+
+        //Assert
+        assertTrue(response);
     }
 }

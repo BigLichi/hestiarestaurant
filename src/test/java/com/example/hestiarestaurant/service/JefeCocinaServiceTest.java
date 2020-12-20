@@ -53,7 +53,7 @@ class JefeCocinaServiceTest {
     }
 
     @Test
-    void obtengoTodosLosJefeCocinaYNoExiste() {
+    void obtengoTodosLosJefeCocinaYLaListaEstaVacia() {
         //Test Cuando listAll() == null;
         //Arrange
         ArrayList<JefeCocina> jefeCocinas = new ArrayList<>();
