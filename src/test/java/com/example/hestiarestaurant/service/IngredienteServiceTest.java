@@ -109,7 +109,7 @@ class IngredienteServiceTest {
     }
 
     @Test
-    void encuentraAlJefeCocinaSegunSuIdYNoExiste() {
+    void encuentraAlIngredienteSegunSuIdYNoExiste() {
         //Test Encuentra el Ingrediente segun su ID, pero findById() == Null
         //Arrange
         Ingrediente ingrediente = new Ingrediente(1, 3, "Pancito", "Unidad");
@@ -137,4 +137,5 @@ class IngredienteServiceTest {
         //Assert
         assertTrue(response);
     }
+
 }

@@ -9,12 +9,12 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer nroPedido;
-  
+
     private boolean estado;
     private Date fecha;
     private int mesa;
     private int recibo;
-  
+
     @OneToMany(mappedBy = "pedido")
     Set<DetallePedido> detallePedido;
 
@@ -53,7 +53,7 @@ public class Pedido {
     public void setRecibo(int recibo) {
         this.recibo = recibo;
     }
-  
+
     public Date getFecha() {
         return fecha;
     }
