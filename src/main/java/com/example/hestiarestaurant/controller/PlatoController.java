@@ -1,7 +1,9 @@
 package com.example.hestiarestaurant.controller;
 
 import com.example.hestiarestaurant.exception.HestiaException;
+import com.example.hestiarestaurant.model.DetallePlato;
 import com.example.hestiarestaurant.model.Plato;
+import com.example.hestiarestaurant.repository.PlatoRepository;
 import com.example.hestiarestaurant.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/platos")
@@ -17,17 +20,19 @@ public class PlatoController {
     @Autowired
     PlatoService platoService;
 
+    @Autowired
+    PlatoRepository platoRepository;
+
     @GetMapping("/")
-    public ResponseEntity<List<Plato>> getAllPlatos(){
+    public ResponseEntity<List<Plato>> getAllPlatos() {
 
         List<Plato> platoList = platoService.listAll();
-        if(platoList.isEmpty()){
+        if (platoList.isEmpty()) {
             return new ResponseEntity<List<Plato>>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Plato>>(platoList, HttpStatus.OK);
         }
     }
-
 
     @PostMapping("/")
     public ResponseEntity<Plato> crearPlato(@RequestBody Plato plato){
@@ -48,6 +53,29 @@ public class PlatoController {
         } else {
             return new ResponseEntity<Plato>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @GetMapping("/{id}/detalle")
+    public ResponseEntity<Set<DetallePlato>> getPlatoDetalle(@PathVariable(value = "id") int platoBuscar){
+        Plato plato = platoService.findById(platoBuscar);
+        if(plato != null){
+            return  new ResponseEntity<Set<DetallePlato>>(plato.getDetallePlatoSet(),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Set<DetallePlato>>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Plato> updateStatus (@RequestBody Plato plato,@PathVariable(value = "id") int platoBuscar){
+            return new ResponseEntity<Plato>(platoRepository.findById(platoBuscar)
+                    .map(platoModificado ->{
+                        platoModificado.setDisponibilidad(plato.isDisponibilidad());
+                        return platoRepository.save(platoModificado);
+                    })
+                    .orElseGet(() -> {
+                        return plato;
+                    }),HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")

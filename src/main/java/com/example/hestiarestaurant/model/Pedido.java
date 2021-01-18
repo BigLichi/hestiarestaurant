@@ -1,5 +1,7 @@
 package com.example.hestiarestaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.Date;
@@ -15,19 +17,21 @@ public class Pedido {
     private int mesa;
     private int recibo;
 
+    @JsonManagedReference(value = "DetallePedido")
+
     @OneToMany(mappedBy = "pedido")
     Set<DetallePedido> detallePedido;
 
     public Pedido() {
     }
 
-    public Pedido(Integer nroPedido, int mesa, int recibo, Date fecha, boolean estado) {
+    public Pedido(Integer nroPedido, boolean estado, Date fecha, int mesa, int recibo, Set<DetallePedido> detallePedido) {
         this.nroPedido = nroPedido;
+        this.estado = estado;
+        this.fecha = fecha;
         this.mesa = mesa;
         this.recibo = recibo;
-        this.fecha = fecha;
-        this.estado = estado;
-
+        this.detallePedido = detallePedido;
     }
 
     public Integer getNroPedido() {
@@ -70,4 +74,13 @@ public class Pedido {
         this.estado = estado;
     }
 
+
+    public Set<DetallePedido> getDetallePedido() {
+        return detallePedido;
+    }
+
+    public void setDetallePedido(Set<DetallePedido> detallePedido) {
+        this.detallePedido = detallePedido;
+    }
 }
+

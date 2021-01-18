@@ -1,6 +1,7 @@
 package com.example.hestiarestaurant.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -17,7 +18,13 @@ public class Plato {
     @JsonManagedReference(value = "DetallePlato")
     @OneToMany(mappedBy = "plato")
     @JsonIgnore
-    Set<DetallePlato> DetallePlatoSet;
+    Set<DetallePlato> detallePlatoSet;
+
+    @JsonBackReference(value = "DetallePedidoPlato")
+    @OneToMany(mappedBy = "plato")
+    Set<DetallePedido> detallePedidoSet;
+
+
 
     private String nombre;
     private int precio;
@@ -28,7 +35,7 @@ public class Plato {
 
     public Plato(Integer idPlato, Set<DetallePlato> detallePlatoSet, String nombre, int precio, boolean disponibilidad) {
         this.idPlato = idPlato;
-        DetallePlatoSet = detallePlatoSet;
+        this.detallePlatoSet = detallePlatoSet;
         this.nombre = nombre;
         this.precio = precio;
         this.disponibilidad = disponibilidad;
@@ -43,11 +50,11 @@ public class Plato {
     }
 
     public Set<DetallePlato> getDetallePlatoSet() {
-        return DetallePlatoSet;
+        return detallePlatoSet;
     }
 
     public void setDetallePlatoSet(Set<DetallePlato> detallePlatoSet) {
-        DetallePlatoSet = detallePlatoSet;
+        this.detallePlatoSet = detallePlatoSet;
     }
 
     public String getNombre() {

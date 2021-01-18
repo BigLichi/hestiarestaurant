@@ -15,8 +15,9 @@ public class DetallePlatoKey implements Serializable {
     @Column(name = "id_ingrediente")
     Integer idIngrediente;
 
-    public DetallePlatoKey(Integer idPlato) {
+    public DetallePlatoKey(Integer idPlato, Integer idIngrediente) {
         this.idPlato = idPlato;
+        this.idIngrediente = idIngrediente;
     }
 
     public DetallePlatoKey() {
@@ -28,6 +29,14 @@ public class DetallePlatoKey implements Serializable {
 
     public void setIdPlato(Integer idPlato) {
         this.idPlato = idPlato;
+    }
+
+    public Integer getIdIngrediente() {
+        return idIngrediente;
+    }
+
+    public void setIdIngrediente(Integer idIngrediente) {
+        this.idIngrediente = idIngrediente;
     }
 
     @Override

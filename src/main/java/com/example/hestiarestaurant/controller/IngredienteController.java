@@ -3,6 +3,8 @@ package com.example.hestiarestaurant.controller;
 
 import com.example.hestiarestaurant.exception.HestiaException;
 import com.example.hestiarestaurant.model.Ingrediente;
+import com.example.hestiarestaurant.model.Plato;
+import com.example.hestiarestaurant.repository.IngredienteRepository;
 import com.example.hestiarestaurant.service.IngredienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,9 @@ public class IngredienteController {
 
     @Autowired
     IngredienteService ingredienteService;
+
+    @Autowired
+    IngredienteRepository ingredienteRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Ingrediente>> getAllIngredientes(){
@@ -48,6 +53,19 @@ public class IngredienteController {
         } else {
             return new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Ingrediente> updateCantidad (@RequestBody Ingrediente ingrediente, @PathVariable(value = "id") int ingredienteBuscar){
+        return new ResponseEntity<Ingrediente>(ingredienteRepository.findById(ingredienteBuscar)
+                .map(ingredienteCantidad ->{
+                    ingredienteCantidad.setCantidad(ingredienteCantidad.getCantidad() + ingrediente.getCantidad());
+                    return ingredienteRepository.save(ingredienteCantidad);
+                })
+                .orElseGet(() -> {
+                    return ingrediente;
+                }),HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")

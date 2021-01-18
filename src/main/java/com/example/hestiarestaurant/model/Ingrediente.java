@@ -14,7 +14,7 @@ public class Ingrediente {
 
     @JsonBackReference(value = "DetalleIngrediente")
     @OneToMany(mappedBy = "ingrediente")
-    Set<DetallePlato> DetallePlatoSet;
+    Set<DetallePlato> detallePlatoSet;
 
     private int cantidad;
     private String nombre;
