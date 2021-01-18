@@ -1,6 +1,7 @@
 package com.example.hestiarestaurant.service;
 
 import com.example.hestiarestaurant.exception.HestiaException;
+import com.example.hestiarestaurant.model.DetallePedido;
 import com.example.hestiarestaurant.model.Pedido;
 import com.example.hestiarestaurant.repository.PedidoRepository;
 import com.example.hestiarestaurant.service.Impl.PedidoServiceImplementation;
@@ -10,9 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
@@ -32,8 +31,12 @@ class PedidoServiceTest {
         //Test listAll()
         //Arrange
         ArrayList<Pedido> listaPedido = new ArrayList<Pedido>();
-        listaPedido.add(new Pedido(1, 3, 3000, Calendar.getInstance().getTime(), false));
-        listaPedido.add(new Pedido(2, 4, 10000, Calendar.getInstance().getTime(), false));
+        Date fecha = new Date();
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido1 = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
+        Pedido pedido2 = new Pedido(2,true, fecha, 4, 12,detallePedidoSet);
+        listaPedido.add(pedido1);
+        listaPedido.add(pedido2);
         when(pedidoRepository.findAll()).thenReturn(listaPedido);
         List<Pedido> resultado;
 
@@ -70,7 +73,9 @@ class PedidoServiceTest {
     void trataDeGuardarElPedidoPeroEsteYaExiste() {
         //Test save() No guarda el pedido, ya que, ya existe
         //Arrange
-        Pedido pedido= new Pedido(1, 3, 3000, Calendar.getInstance().getTime(), false);
+        Date fecha = new Date();
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
         when(pedidoRepository.findById(1)).thenReturn(java.util.Optional.of(pedido));
 
         //Act + Assert
@@ -81,7 +86,9 @@ class PedidoServiceTest {
     void guardaUnPedidoNoExistenteALaListaDePedidos() throws HestiaException {
         //Test save() Guarda el pedido
         //Arrange
-        Pedido pedido= new Pedido(1, 3, 3000, Calendar.getInstance().getTime(), false);
+        Date fecha = new Date();
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
         when(pedidoRepository.save(pedido)).thenReturn(pedido);
 
         //Act
@@ -96,7 +103,9 @@ class PedidoServiceTest {
     void encuentraElPedidoSegunSuIdYLoDevuelve() {
         //Test findById()
         //Arrange
-        Pedido pedido= new Pedido(1, 3, 3000, Calendar.getInstance().getTime(), false);
+        Date fecha = new Date();
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
         when(pedidoRepository.getOne(1)).thenReturn(pedido);
 
         //Act
@@ -111,7 +120,6 @@ class PedidoServiceTest {
     void encuentraAlPedidoSegunSuIdYNoExiste() {
         //Test Encuentra el Ingrediente segun su ID, pero findById() == Null
         //Arrange
-        Pedido pedido= new Pedido(1, 3, 3000, Calendar.getInstance().getTime(), false);
         when(pedidoRepository.getOne(1)).thenReturn(null);
         Pedido resultado;
 
@@ -126,7 +134,6 @@ class PedidoServiceTest {
     void borrarCuandoSeEncuentreUnIngrediente() {
         //Test delete()
         //Arrange
-        Pedido pedido= new Pedido(1, 3, 3000, Calendar.getInstance().getTime(), false);
         doNothing().when(pedidoRepository).deleteById(1);
         Boolean response;
 

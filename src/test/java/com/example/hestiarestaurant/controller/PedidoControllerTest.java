@@ -1,6 +1,7 @@
 package com.example.hestiarestaurant.controller;
 
 import com.example.hestiarestaurant.exception.HestiaException;
+import com.example.hestiarestaurant.model.DetallePedido;
 import com.example.hestiarestaurant.model.Pedido;
 import com.example.hestiarestaurant.service.PedidoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +24,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,8 +57,9 @@ class PedidoControllerTest {
         //test getAllPedido() return = OK
         //Given
         Date fecha = new Date();
-        Pedido pedido1 = new Pedido(1, 4, 13000, fecha,true);
-        Pedido pedido2 = new Pedido(2, 4, 13000, fecha,true);
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido1 = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
+        Pedido pedido2 = new Pedido(2,true, fecha, 4, 12,detallePedidoSet);
         ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
         pedidos.add(pedido1);
         pedidos.add(pedido2);
@@ -87,7 +91,8 @@ class PedidoControllerTest {
         //test crearPedido() return = Created
         //Given
         Date fecha = new Date();
-        Pedido pedido = new Pedido(1, 4, 13000, fecha,true);
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
         when(pedidoService.save(Mockito.any(Pedido.class))).thenReturn(pedido);
 
         //When
@@ -106,7 +111,8 @@ class PedidoControllerTest {
         //test crearPedido() return = Bad_Request
         //Given
         Date fecha = new Date();
-        Pedido pedido = new Pedido(1, 4, 13000, fecha,true);
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
         when(pedidoService.save(Mockito.any(Pedido.class))).thenThrow(HestiaException.class);
 
         //When
@@ -124,7 +130,8 @@ class PedidoControllerTest {
         //test getPedidoById() return = OK
         //Given
         Date fecha = new Date();
-        Pedido pedido = new Pedido(1, 4, 13000, fecha,true);
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
         given(pedidoService.findById(1)).willReturn(pedido);
 
         //When
@@ -153,7 +160,8 @@ class PedidoControllerTest {
         //test borrarPedido() return = OK
         //Given
         Date fecha = new Date();
-        Pedido pedido = new Pedido(1, 4, 13000, fecha,true);
+        Set<DetallePedido> detallePedidoSet = new HashSet<DetallePedido>();
+        Pedido pedido = new Pedido(1,true, fecha, 4, 10,detallePedidoSet);
         given(pedidoService.delete(1)).willReturn(true);
 
         //When
