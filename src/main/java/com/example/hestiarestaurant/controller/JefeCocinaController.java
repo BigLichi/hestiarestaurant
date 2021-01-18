@@ -18,7 +18,7 @@ public class JefeCocinaController {
     JefeCocinaService jefeCocinaService;
 
     @GetMapping("/")
-    public ResponseEntity<List<JefeCocina>> getAllPlatos(){
+    public ResponseEntity<List<JefeCocina>> getAllJefeCocina(){
         List<JefeCocina> jefeCocinaList = jefeCocinaService.listAll();
         if(jefeCocinaList.isEmpty()){
             return new ResponseEntity<List<JefeCocina>>(HttpStatus.NO_CONTENT);

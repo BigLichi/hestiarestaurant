@@ -11,13 +11,14 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer nroPedido;
-  
+
     private boolean estado;
     private Date fecha;
     private int mesa;
     private int recibo;
 
     @JsonManagedReference(value = "DetallePedido")
+
     @OneToMany(mappedBy = "pedido")
     Set<DetallePedido> detallePedido;
 
@@ -56,7 +57,7 @@ public class Pedido {
     public void setRecibo(int recibo) {
         this.recibo = recibo;
     }
-  
+
     public Date getFecha() {
         return fecha;
     }
@@ -73,6 +74,7 @@ public class Pedido {
         this.estado = estado;
     }
 
+
     public Set<DetallePedido> getDetallePedido() {
         return detallePedido;
     }
@@ -81,3 +83,4 @@ public class Pedido {
         this.detallePedido = detallePedido;
     }
 }
+

@@ -15,35 +15,33 @@ import java.util.Optional;
 @Service
 public class PedidoServiceImplementation implements PedidoService {
 
-        @Autowired
-        private PedidoRepository pedidoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
-        @Override
-        public List<Pedido> listAll(){
-            return pedidoRepository.findAll();
-        }
+    @Override
+    public List<Pedido> listAll(){
+        return pedidoRepository.findAll();
+    }
 
-        @Override
-        public Pedido save(Pedido pedido) throws HestiaException {
-            if(pedido != null){
-                Optional<Pedido> hallado = pedidoRepository.findById(pedido.getNroPedido());
-                if(hallado.isEmpty()){
-                    return pedidoRepository.save(pedido);
-                }
+    @Override
+    public Pedido save(Pedido pedido) throws HestiaException {
+        if(pedido != null){
+            Optional<Pedido> hallado = pedidoRepository.findById(pedido.getNroPedido());
+            if(hallado.isEmpty()){
+                return pedidoRepository.save(pedido);
             }
-            throw new HestiaException();
         }
+        throw new HestiaException();
+    }
 
-        @Override
-        public Pedido findById(int id){
-            return pedidoRepository.getOne(id);
-        }
+    @Override
+    public Pedido findById(int id){
+        return pedidoRepository.getOne(id);
+    }
 
-        @Override
-        public boolean delete(int id){
-            pedidoRepository.deleteById(id);
-            return true;
-        }
-
-
+    @Override
+    public boolean delete(int id){
+        pedidoRepository.deleteById(id);
+        return true;
+    }
 }

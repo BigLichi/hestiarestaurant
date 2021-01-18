@@ -1,12 +1,15 @@
 package com.example.hestiarestaurant.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class JefeCocina {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idCocinero;
 
     private String nombre;
