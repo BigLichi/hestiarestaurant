@@ -40,7 +40,7 @@ public class MeseroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Mesero> getPlatoById(@PathVariable(value = "id") int meseroBuscar){
+    public ResponseEntity<Mesero> getMeseroById(@PathVariable(value = "id") int meseroBuscar){
         Mesero mesero = meseroService.findById(meseroBuscar);
         if (mesero != null){
             return new ResponseEntity<Mesero>(mesero,HttpStatus.OK);

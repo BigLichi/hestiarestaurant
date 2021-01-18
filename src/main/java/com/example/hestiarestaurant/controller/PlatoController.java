@@ -33,7 +33,7 @@ public class PlatoController {
     public ResponseEntity<Plato> crearPlato(@RequestBody Plato plato){
         try {
             Plato platoNuevo = platoService.save(plato);
-            return new ResponseEntity<Plato>(platoNuevo, HttpStatus.OK);
+            return new ResponseEntity<Plato>(platoNuevo, HttpStatus.CREATED);
         }
         catch (HestiaException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
